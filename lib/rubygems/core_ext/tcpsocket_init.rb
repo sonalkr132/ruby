@@ -13,10 +13,11 @@ module CoreExtensions
       def initialize(host, serv, *rest)
         mutex = Mutex.new
         addrs = []
+        threads = []
         cond_var = ConditionVariable.new
 
         Addrinfo.foreach(host, serv, nil, :STREAM) do |addr|
-          Thread.report_on_exception = false if defined? Thread.report_on_exception = ()
+          threads << Thread.report_on_exception = false if defined? Thread.report_on_exception = ()
 
           Thread.new(addr) do
             # give head start to ipv6 addresses
@@ -39,6 +40,8 @@ module CoreExtensions
 
           host = addrs.shift unless addrs.empty?
         end
+
+        threads.each { |t| t.kill.join if t.alive? }
 
         super(host, serv, *rest)
       end
