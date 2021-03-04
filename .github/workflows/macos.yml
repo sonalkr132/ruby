@@ -40,7 +40,27 @@ jobs:
       - run: make $JOBS
       - run: make prepare-gems
         if: matrix.test_task == 'check'
-      - run: make $JOBS -s ${{ matrix.test_task }}
+      - run: make $JOBS -s main
+        timeout-minutes: 60
+        env:
+          RUBY_TESTOPTS: "-q --tty=no"
+          TEST_BUNDLED_GEMS_ALLOW_FAILURES: "rexml"
+      - run: make $JOBS -s test
+        timeout-minutes: 60
+        env:
+          RUBY_TESTOPTS: "-q --tty=no"
+          TEST_BUNDLED_GEMS_ALLOW_FAILURES: "rexml"
+      - run: make $JOBS -s test-tool
+        timeout-minutes: 60
+        env:
+          RUBY_TESTOPTS: "-q --tty=no"
+          TEST_BUNDLED_GEMS_ALLOW_FAILURES: "rexml"
+      - run: make $JOBS -s test-all
+        timeout-minutes: 60
+        env:
+          RUBY_TESTOPTS: "-q --tty=no"
+          TEST_BUNDLED_GEMS_ALLOW_FAILURES: "rexml"
+      - run: make $JOBS -s test-spec
         timeout-minutes: 60
         env:
           RUBY_TESTOPTS: "-q --tty=no"
