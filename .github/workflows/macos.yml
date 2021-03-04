@@ -43,7 +43,7 @@ jobs:
       - run: make $JOBS -s test-all
         timeout-minutes: 60
         env:
-          RUBY_TESTOPTS: "-q --tty=no"
+          RUBY_TESTOPTS: "--seed=76859 -q --tty=no"
           TEST_BUNDLED_GEMS_ALLOW_FAILURES: "rexml"
       - run: make $JOBS -s test-spec
         timeout-minutes: 60
