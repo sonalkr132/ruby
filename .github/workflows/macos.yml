@@ -5,7 +5,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        test_task: [ "check", "test-bundler-parallel", "test-bundled-gems", "leaked-globals" ]
+        test_task: [ "check" ]
       fail-fast: false
     env:
       GITPULLOPTIONS: --no-tags origin ${{github.ref}}
@@ -40,21 +40,6 @@ jobs:
       - run: make $JOBS
       - run: make prepare-gems
         if: matrix.test_task == 'check'
-      - run: make $JOBS -s main
-        timeout-minutes: 60
-        env:
-          RUBY_TESTOPTS: "-q --tty=no"
-          TEST_BUNDLED_GEMS_ALLOW_FAILURES: "rexml"
-      - run: make $JOBS -s test
-        timeout-minutes: 60
-        env:
-          RUBY_TESTOPTS: "-q --tty=no"
-          TEST_BUNDLED_GEMS_ALLOW_FAILURES: "rexml"
-      - run: make $JOBS -s test-tool
-        timeout-minutes: 60
-        env:
-          RUBY_TESTOPTS: "-q --tty=no"
-          TEST_BUNDLED_GEMS_ALLOW_FAILURES: "rexml"
       - run: make $JOBS -s test-all
         timeout-minutes: 60
         env:
