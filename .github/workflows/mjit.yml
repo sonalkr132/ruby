@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     env:
-      TESTOPTS: '-q --tty=no'
-      RUN_OPTS: '--disable-gems ${{ matrix.jit_opts }} --jit-debug=-ggdb3 --timeout 60'
+      TESTOPTS: '--help'
+      RUN_OPTS: '--help'
       GITPULLOPTIONS: --no-tags origin ${{github.ref}}
     steps:
       - run: mkdir build
