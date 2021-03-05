@@ -9,7 +9,6 @@ module CoreExtensions
     module Initializer
       CONNECTION_TIMEOUT = 5
       IPV4_DELAY_SECONDS = 0.1
-      JOIN_WAIT_SECONDS = 2
 
       def initialize(host, serv, *rest)
         mutex = Mutex.new
@@ -42,7 +41,7 @@ module CoreExtensions
           host = addrs.shift unless addrs.empty?
         end
 
-        threads.each {|t| t.kill.join(JOIN_WAIT_SECONDS) if t.alive? }
+        threads.each {|t| t.kill.join if t.alive? }
 
         super(host, serv, *rest)
       end
